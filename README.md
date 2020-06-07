@@ -1,6 +1,6 @@
-# vegasistent
+# VEGASISTENT
 
-A new Flutter project.
+Free eAsistent app.
 
 ## Getting Started
 
