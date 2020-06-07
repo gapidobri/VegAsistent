@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:time_machine/time_machine.dart';
-import 'package:vegasistent/timetable/calendar.dart';
+import 'package:loading/indicator/ball_pulse_indicator.dart';
+import 'package:loading/loading.dart';
+import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
+import 'package:vegasistent/login.dart';
+import 'package:vegasistent/navigation.dart';
+import 'package:vegasistent/query/prefs.dart';
+import 'package:vegasistent/query/query.dart';
 
 void main() async {
-
-  WidgetsFlutterBinding.ensureInitialized();
-  await TimeMachine.initialize({'rootBundle': rootBundle});
-
   runApp(App());
 }
 
@@ -16,8 +17,73 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      home: Calendar(),
+      title: 'VegAsistent',
+      home: Router(),
     );
+  }
+}
+
+class Router extends StatefulWidget {
+  @override
+  _RouterState createState() => _RouterState();
+}
+
+class _RouterState extends State<Router> {
+
+  Widget view = Container(
+    color: Colors.white,
+    child: Center(
+      child: Loading(
+        indicator: BallPulseIndicator(),
+        size: 100.0,
+        color: Colors.red,
+      ),
+    ),
+  );
+
+  Future<bool> isLoggedIn() async {
+    try {
+      Tuple3 token = await getPrefToken();
+      return await isValidToken(token);
+    } catch (e) {
+      print('Something went wrong with isLoggedIn() 😥:');
+      print(e);
+    }
+    return false;
+  }
+
+  @override
+  void initState() {
+    _checkLogin();
+    super.initState();
+  }
+  
+  void _checkLogin() async {
+    try {
+      Tuple3 token = await getPrefToken();
+      if (await isValidToken(token)) {
+        setState(() {
+          view = Navigation(
+            onLogOut: () async {
+              await prefLogout();
+              _checkLogin();
+            }
+          );
+        });
+        return;
+      }
+    } catch (e) {
+      print('Something went wrong with isLoggedIn() 😥:');
+      print(e);
+    }
+    setState(() {
+      view = Login(onSignedIn: _checkLogin);
+    });
+    
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return view;
   }
 }

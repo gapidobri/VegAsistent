@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "102121703761",
+    "firebase_url": "https://easistent-api.firebaseio.com",
+    "project_id": "easistent-api",
+    "storage_bucket": "easistent-api.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102121703761:android:f4a7e526d6e4fa3ee0ab70",
+        "android_client_info": {
+          "package_name": "com.gportals.vegasistent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "102121703761-5qegs4kh0idmlacg10vh3kq1i0v5455p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVY7Dk3cabX7O0z1_Wub2WwoI7q0oPM2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "102121703761-5qegs4kh0idmlacg10vh3kq1i0v5455p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
