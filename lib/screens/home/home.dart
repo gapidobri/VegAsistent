@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:vegasistent/query/prefs.dart';
-import 'package:vegasistent/query/query.dart';
+import 'package:vegasistent/services/ea-query.dart';
+import 'package:vegasistent/utils/prefs.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
         name = d['display_name'];
       });
 
-      var res = await getData('https://www.easistent.com/webapp', token);
+      await getData('https://www.easistent.com/webapp', token);
 
     }
     run();
@@ -35,12 +35,10 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
-    return SafeArea(
-      child: Column(
-        children: [
-          
-        ],
-      ),
+    return Column(
+      children: [
+        
+      ],
     );
   }
 }

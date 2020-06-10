@@ -1,0 +1,32 @@
+{
+   "items":[
+      {
+         "name":"Informatika s tehni\u0161kim komuniciranjem",
+         "short_name":"ITK",
+         "id":4368454,
+         "grade_type":"grade",
+         "is_excused":false,
+         "final_grade":{
+            "value":"5"
+         },
+         "average_grade":"4,67",
+         "grade_rank":"good",
+         "semesters":[
+            {
+               "id":2,
+               "final_grade":null,
+               "grades":[
+                  {
+                     "type_name":"Pisna ocena",
+                     "comment":null,
+                     "id":328816957,
+                     "type":"list",
+                     "overrides_ids":null,
+                     "value":"4"
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}

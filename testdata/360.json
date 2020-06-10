@@ -1,0 +1,37 @@
+{
+   "items":[
+      {
+         "id":1540885,
+         "course":"SLO",
+         "course_id":4368928,
+         "event_type":"urnik",
+         "category":"Aktivnost\/pasivnost pri pouku",
+         "text":"- Zamudili: L. Bratun, G. Dobrovoljc, L. Hribar, D. Ma\u0161inivi\u0107, J. \u0160krlep\n- R. Omahen - prisoten",
+         "type":"entry",
+         "date":"2020-04-20",
+         "author":"Katja Lasbaher"
+      },
+      {
+         "id":1452463,
+         "course":"ITKv",
+         "course_id":4368814,
+         "event_type":"urnik",
+         "category":"Aktivno sodelovanje",
+         "text":"Za sodelovanje",
+         "type":"praise",
+         "date":"2020-04-06",
+         "author":"Janja \u017dlebnik"
+      },
+      {
+         "id":1426357,
+         "course":"ITK",
+         "course_id":4368454,
+         "event_type":"urnik",
+         "category":"Aktivno sodelovanje",
+         "text":"Za pomo\u010d pri urejanju oddelkov v aplikaciji Discord.",
+         "type":"praise",
+         "date":"2020-04-01",
+         "author":"Janja \u017dlebnik"
+      }
+   ]
+}

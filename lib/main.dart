@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:loading/indicator/ball_pulse_indicator.dart';
 import 'package:loading/loading.dart';
-import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 import 'package:vegasistent/login.dart';
 import 'package:vegasistent/navigation.dart';
-import 'package:vegasistent/query/prefs.dart';
-import 'package:vegasistent/query/query.dart';
+import 'package:vegasistent/services/ea-query.dart';
+import 'package:vegasistent/utils/prefs.dart';
 
-void main() async {
+void main() {
   runApp(App());
 }
 

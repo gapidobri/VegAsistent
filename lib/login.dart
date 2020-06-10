@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuple/tuple.dart';
-import 'package:vegasistent/main.dart';
-import 'package:vegasistent/query/prefs.dart';
-import 'package:vegasistent/query/query.dart';
+import 'package:vegasistent/services/ea-query.dart';
+import 'package:vegasistent/utils/prefs.dart';
 
 class Login extends StatefulWidget {
   Login({ this.onSignedIn });

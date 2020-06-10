@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
-import 'package:vegasistent/models/grade-widget.dart';
-import 'package:vegasistent/query/prefs.dart';
-import 'package:vegasistent/query/query.dart';
+import 'package:vegasistent/screens/grades/widgets/grade-widget.dart';
+import 'package:vegasistent/services/ea-query.dart';
+import 'package:vegasistent/utils/prefs.dart';
 
 class Grades extends StatefulWidget {
   @override
@@ -18,25 +18,24 @@ class _GradesState extends State<Grades> {
   @override
   void initState() {
     void getGrades() async {
-      List<Tuple2> gradeData = [];
-
       Tuple3 token = await getPrefToken();
       var subjects = await getData('https://www.easistent.com/m/grades', token);
       var dec = json.decode(subjects);
 
+      grades.clear();
       for (var subject in dec['items']) {
         var subjectData = json.decode(await getData('https://www.easistent.com/m/grades/classes/${subject['id']}', token));
         for (var semester in subjectData['semesters']) {
           for (var grade in semester['grades']) {
-            gradeData.add(new Tuple2(grade, subject));
+            grades.add({
+              'grade': grade,
+              'semester': semester,
+              'subject': subject
+            });
           }
         }
-
       }
-      
-      setState(() {
-        grades = gradeData;
-      });
+      setState(() {});
     }
     getGrades();
 
@@ -45,21 +44,24 @@ class _GradesState extends State<Grades> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: ListView.builder(
+    return ListView.builder(
         padding: EdgeInsets.all(8),
         itemCount: grades.length,
-        itemBuilder: (BuildContext context, int index) {
-          Tuple2 grade = grades[index];
+        itemBuilder: (context, index) {
+          var grade = grades[index];
 
           return Card(
+            elevation: 8,
             child: GradeWidget(
-              subject: grade.item2['short_name'],
-              grade: grade.item1['value'],
+              subject: grade['subject']['name'],
+              shortSubject: grade['subject']['short_name'],
+              grade: int.parse(grade['grade']['value']),
+              date: DateTime.parse(grade['grade']['date']),
+              teacher: grade['grade']['inserted_by']['name'],
+              average: double.parse(grade['subject']['average_grade'].toString().replaceAll(',', '.')),
             )
           );
         },
-      ),
     );
   }
 }

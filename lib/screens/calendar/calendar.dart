@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:time_machine/time_machine.dart';
 import 'package:timetable/timetable.dart';
-import 'package:vegasistent/query/prefs.dart';
-import 'package:vegasistent/query/query.dart';
+import 'package:vegasistent/services/ea-query.dart';
+import 'package:vegasistent/utils/prefs.dart';
 
 class Calendar extends StatefulWidget {
   @override
@@ -37,7 +37,7 @@ class _CalendarState extends State<Calendar> {
     
     void getLessons() async {
       var token = await getPrefToken();
-      var data = await getData('https://www.easistent.com/m/me/child', token);
+      await getData('https://www.easistent.com/m/me/child', token);
     }
     getLessons();
 

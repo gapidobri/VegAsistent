@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:vegasistent/query/prefs.dart';
-import 'package:vegasistent/views/calendar.dart';
-import 'package:vegasistent/views/grades.dart';
-import 'package:vegasistent/views/home.dart';
-import 'package:vegasistent/views/homework.dart';
-import 'package:vegasistent/views/timetable.dart';
+import 'package:tuple/tuple.dart';
+import 'package:vegasistent/screens/calendar/calendar.dart';
+import 'package:vegasistent/screens/grades/grades.dart';
+import 'package:vegasistent/screens/home/home.dart';
+import 'package:vegasistent/screens/homework/homework.dart';
+import 'package:vegasistent/screens/not-available.dart';
+import 'package:vegasistent/screens/timetable/timetable.dart';
 
 class Navigation extends StatefulWidget {
   Navigation({ this.onLogOut });
@@ -48,7 +49,7 @@ class _NavigationState extends State<Navigation> {
                     ),
                   ),
                   Text(
-                    'Gašper',
+                    'Beta Uporabnik',
                     style: TextStyle(
                       fontSize: 24,
                       color: Colors.white
@@ -57,16 +58,18 @@ class _NavigationState extends State<Navigation> {
                 ],
               ),
             ),
+
             ListTile(
               leading: Icon(Icons.home),
               title: Text('Domov'),
               onTap: () {
                 setState(() {
-                  currentPage = Home();
+                  currentPage = NotAvailable();
                   Navigator.pop(context);
                 });
               },
             ),
+
             ListTile(
               leading: Icon(Icons.calendar_view_day),
               title: Text('Urnik'),
@@ -77,26 +80,18 @@ class _NavigationState extends State<Navigation> {
                 });
               },
             ),
+
             ListTile(
               leading: Icon(Icons.calendar_today),
               title: Text('Koledar'),
               onTap: () {
                 setState(() {
-                  currentPage = Calendar();
+                  currentPage = NotAvailable();
                   Navigator.pop(context);
                 });
               },
             ),
-            ListTile(
-              leading: Icon(Icons.book),
-              title: Text('Domača naloga'),
-              onTap: () {
-                setState(() {
-                  currentPage = Homework();
-                  Navigator.pop(context);
-                });
-              },
-            ),
+
             ListTile(
               leading: Icon(Icons.grade),
               title: Text('Ocene'),
@@ -107,21 +102,46 @@ class _NavigationState extends State<Navigation> {
                 });
               },
             ),
+
+            ListTile(
+              leading: Icon(Icons.create),
+              title: Text('Naloge'),
+              onTap: () {
+                setState(() {
+                  currentPage = Homework();
+                  Navigator.pop(context);
+                });
+              },
+            ),
+
             ListTile(
               leading: Icon(Icons.email),
               title: Text('Sporočila'),
               onTap: () {
                 setState(() {
-                  currentPage = Container(color: Colors.green);
+                  currentPage = NotAvailable();
                   Navigator.pop(context);
                 });
               },
             ),
+
+            ListTile(
+              leading: Icon(Icons.thumbs_up_down),
+              title: Text('x360'),
+              onTap: () {
+                setState(() {
+                  currentPage = NotAvailable();
+                  Navigator.pop(context);
+                });
+              },
+            ),
+
             Divider(
               color: Colors.black,
               indent: 8,
               endIndent: 32,
             ),
+
             ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text('Odjava'),
