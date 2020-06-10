@@ -4,8 +4,10 @@ import 'package:vegasistent/screens/calendar/calendar.dart';
 import 'package:vegasistent/screens/grades/grades.dart';
 import 'package:vegasistent/screens/home/home.dart';
 import 'package:vegasistent/screens/homework/homework.dart';
-import 'package:vegasistent/screens/not-available.dart';
+import 'package:vegasistent/screens/pai/pai.dart';
 import 'package:vegasistent/screens/timetable/timetable.dart';
+import 'package:vegasistent/widgets/loading.dart';
+import 'package:vegasistent/widgets/not-available.dart';
 
 class Navigation extends StatefulWidget {
   Navigation({ this.onLogOut });
@@ -17,16 +19,27 @@ class Navigation extends StatefulWidget {
 
 class _NavigationState extends State<Navigation> {
 
-  Widget currentPage = Home();
+  int currentPage = 0;
+
+  List<Page> pages = [
+    Page(name: 'Domov', icon: Icons.home, page: NotAvailable()),
+    Page(name: 'Urnik', icon: Icons.calendar_view_day, page: Timetable()),
+    Page(name: 'Koledar', icon: Icons.calendar_today, page: NotAvailable()),
+    Page(name: 'Ocene', icon: Icons.grade, page: Grades()),
+    Page(name: 'Naloge', icon: Icons.create, page: Homework()),
+    Page(name: 'Sporočila', icon: Icons.message, page: NotAvailable()),
+    Page(name: 'x360', icon: Icons.thumbs_up_down, page: PAI()),
+  ];
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red,
+        title: Text(pages[currentPage].name),
       ),
       backgroundColor: Colors.white,
-      body: currentPage,
+      body: pages[currentPage].page,
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -58,82 +71,20 @@ class _NavigationState extends State<Navigation> {
                 ],
               ),
             ),
-
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Domov'),
-              onTap: () {
-                setState(() {
-                  currentPage = NotAvailable();
-                  Navigator.pop(context);
-                });
-              },
-            ),
-
-            ListTile(
-              leading: Icon(Icons.calendar_view_day),
-              title: Text('Urnik'),
-              onTap: () {
-                setState(() {
-                  currentPage = Timetable();
-                  Navigator.pop(context);
-                });
-              },
-            ),
-
-            ListTile(
-              leading: Icon(Icons.calendar_today),
-              title: Text('Koledar'),
-              onTap: () {
-                setState(() {
-                  currentPage = NotAvailable();
-                  Navigator.pop(context);
-                });
-              },
-            ),
-
-            ListTile(
-              leading: Icon(Icons.grade),
-              title: Text('Ocene'),
-              onTap: () {
-                setState(() {
-                  currentPage = Grades();
-                  Navigator.pop(context);
-                });
-              },
-            ),
-
-            ListTile(
-              leading: Icon(Icons.create),
-              title: Text('Naloge'),
-              onTap: () {
-                setState(() {
-                  currentPage = Homework();
-                  Navigator.pop(context);
-                });
-              },
-            ),
-
-            ListTile(
-              leading: Icon(Icons.email),
-              title: Text('Sporočila'),
-              onTap: () {
-                setState(() {
-                  currentPage = NotAvailable();
-                  Navigator.pop(context);
-                });
-              },
-            ),
-
-            ListTile(
-              leading: Icon(Icons.thumbs_up_down),
-              title: Text('x360'),
-              onTap: () {
-                setState(() {
-                  currentPage = NotAvailable();
-                  Navigator.pop(context);
-                });
-              },
+          
+            Column(
+              children: pages.map((e) {
+                return ListTile(
+                  leading: Icon(e.icon),
+                  title: Text(e.name),
+                  onTap: () {
+                    setState(() {
+                      currentPage = pages.indexOf(e);
+                      Navigator.pop(context);
+                    });
+                  }
+                );
+              }).toList(),
             ),
 
             Divider(
@@ -157,4 +108,11 @@ class _NavigationState extends State<Navigation> {
       ),
     );
   }
+}
+
+class Page {
+  Page({ this.name, this.icon, this.page });
+  final String name;
+  final IconData icon;
+  final Widget page;
 }

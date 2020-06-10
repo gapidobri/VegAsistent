@@ -5,12 +5,14 @@ import 'package:tuple/tuple.dart';
 import 'package:vegasistent/screens/grades/widgets/grade-widget.dart';
 import 'package:vegasistent/services/ea-query.dart';
 import 'package:vegasistent/utils/prefs.dart';
+import 'package:vegasistent/widgets/loading.dart';
 
 class Grades extends StatefulWidget {
   @override
   _GradesState createState() => _GradesState();
 }
 
+Widget loading = Loading();
 List grades = [];
 
 class _GradesState extends State<Grades> {
@@ -35,16 +37,17 @@ class _GradesState extends State<Grades> {
           }
         }
       }
-      setState(() {});
+      setState(() {
+        loading = null;
+      });
     }
     getGrades();
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return loading ?? ListView.builder(
         padding: EdgeInsets.all(8),
         itemCount: grades.length,
         itemBuilder: (context, index) {

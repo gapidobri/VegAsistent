@@ -6,6 +6,7 @@ import 'package:vegasistent/screens/timetable/widgets/timetable-widget.dart';
 import 'package:vegasistent/services/ea-query.dart';
 import 'package:vegasistent/utils/data-parser.dart';
 import 'package:vegasistent/utils/prefs.dart';
+import 'package:vegasistent/widgets/loading.dart';
 
 class Timetable extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class Timetable extends StatefulWidget {
 
 class _TimetableState extends State<Timetable> {
 
+  Widget loading = Loading();
   List timetable = [];
 
   @override
@@ -22,8 +24,8 @@ class _TimetableState extends State<Timetable> {
     getTimetable(DateTime.now(), DateTime.now().add(new Duration(days: 1)))
     .then((val) {
       setState(() {
+        loading = null;
         timetable = val[0];
-        print(timetable);
       });
     });
     super.initState();
@@ -31,7 +33,7 @@ class _TimetableState extends State<Timetable> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return loading ?? ListView.builder(
       padding: EdgeInsets.all(8),
       itemCount: timetable.length,
       itemBuilder: (context, i) {

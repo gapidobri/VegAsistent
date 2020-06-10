@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
-import 'package:loading/loading.dart';
 import 'package:tuple/tuple.dart';
 import 'package:vegasistent/login.dart';
 import 'package:vegasistent/navigation.dart';
 import 'package:vegasistent/services/ea-query.dart';
 import 'package:vegasistent/utils/prefs.dart';
+import 'package:vegasistent/widgets/loading.dart';
 
 void main() {
   runApp(App());
@@ -32,11 +31,7 @@ class _RouterState extends State<Router> {
   Widget view = Container(
     color: Colors.white,
     child: Center(
-      child: Loading(
-        indicator: BallPulseIndicator(),
-        size: 100.0,
-        color: Colors.red,
-      ),
+      child: Loading()
     ),
   );
 

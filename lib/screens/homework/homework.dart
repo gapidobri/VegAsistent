@@ -8,6 +8,7 @@ import 'package:vegasistent/screens/homework/widgets/homework-widget.dart';
 import 'package:vegasistent/services/ea-query.dart';
 import 'package:vegasistent/utils/data-parser.dart';
 import 'package:vegasistent/utils/prefs.dart';
+import 'package:vegasistent/widgets/loading.dart';
 
 class Homework extends StatefulWidget {
   @override
@@ -16,13 +17,14 @@ class Homework extends StatefulWidget {
 
 class _HomeworkState extends State<Homework> {
 
+  Widget loading = Loading();
   List<HomeworkItem> _items = [];
 
   @override
   void initState() {
-
     getHomework().then((homework) {
       setState(() {
+        loading = null;
         _items = List.from(homework).map((e) {
           return HomeworkItem(
             title: e['title'],
@@ -41,7 +43,7 @@ class _HomeworkState extends State<Homework> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return loading ?? ListView(
       padding: EdgeInsets.all(8),
       children: [
         ExpansionPanelList(

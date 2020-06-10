@@ -48,3 +48,8 @@ Future getHomework() async {
   }
   return homeworkList;
 }
+
+Future getPAI() async {
+  Tuple3 token = await getPrefToken();
+  return json.decode(await getData('https://www.easistent.com/m/praises_and_improvements', token))['items'];
+}
