@@ -1,7 +1,5 @@
 name: Dart CI
 
-
-
 on:
   push:
     branches: [ master ]
@@ -21,7 +19,7 @@ jobs:
     - uses: actions/setup-java@v1
       with:
         java-version: '12.x'
-    - uses: subosito/flutter-action@v1.3.2
+    - uses: subosito/flutter-action@v1
       with:
         flutter-version: '1.9.1+hotfix.6'
     - run: flutter pub get
