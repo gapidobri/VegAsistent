@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:time_machine/time_machine.dart';
 import 'package:timetable/timetable.dart';
 import 'package:vegasistent/services/ea-query.dart';
+import 'package:vegasistent/utils/data-parser.dart';
 import 'package:vegasistent/utils/prefs.dart';
 
 class Calendar extends StatefulWidget {
@@ -9,24 +12,44 @@ class Calendar extends StatefulWidget {
   _CalendarState createState() => _CalendarState();
 }
 
-var eventProvider = EventProvider.list([
-  BasicEvent(
-    id: 0,
-    title: 'Test Event',
-    color: Colors.amber,
-    start: LocalDate.today().at(LocalTime(13, 0, 0)),
-    end: LocalDate.today().at(LocalTime(14, 0, 0)),
-  )
-]);
+List evaluations = [];
+
+EventProvider eventStream = EventProvider.stream(
+  eventGetter: (dates) async* {
+
+    List<BasicEvent> lessons = [];
+
+    for (List day in await getTimetable(dates.start.toDateTimeUnspecified(), dates.end.toDateTimeUnspecified())) {
+      for (var lesson in day) {
+        String start = lesson['time']['date'] + ' ' + lesson['time']['from'];
+        String end = lesson['time']['date'] + ' ' + lesson['time']['to'];
+        print(start);
+
+        lessons.add(
+          BasicEvent(
+            id: Random(),
+            title: lesson['subject']['name'],
+            color: Color(int.parse(lesson['color'].toString().replaceAll('#', '0xff'))),
+            start: LocalDateTime.dateTime(DateTime.parse(start)),
+            end: LocalDateTime.dateTime(DateTime.parse(end)),
+          ),
+        );
+      }
+    }
+
+    yield lessons;
+
+  },
+);
 
 final controller = TimetableController(
-  eventProvider: eventProvider,
+  eventProvider: eventStream,
   initialTimeRange: InitialTimeRange.range(
-    startTime: LocalTime(8, 0, 0),
-    endTime: LocalTime(20, 0, 0),
+    startTime: LocalTime(6, 0, 0),
+    endTime: LocalTime(16, 0, 0),
   ),
   initialDate: LocalDate.today(),
-  visibleRange: VisibleRange.week(),
+  visibleRange: VisibleRange.days(5),
   firstDayOfWeek: DayOfWeek.monday,
 );
 
@@ -56,7 +79,7 @@ class _CalendarState extends State<Calendar> {
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.today),
-          onPressed: () => controller.animateToToday(),
+          onPressed: () => controller.animateTo(LocalDate.today().addDays(-2)),
         ),
       )
     );

@@ -1,13 +1,9 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
 import 'package:vegasistent/screens/homework/models/homework-item.dart';
 import 'package:vegasistent/screens/homework/widgets/homework-content-widget.dart';
 import 'package:vegasistent/screens/homework/widgets/homework-widget.dart';
-import 'package:vegasistent/services/ea-query.dart';
 import 'package:vegasistent/utils/data-parser.dart';
-import 'package:vegasistent/utils/prefs.dart';
 import 'package:vegasistent/widgets/loading.dart';
 
 class Homework extends StatefulWidget {

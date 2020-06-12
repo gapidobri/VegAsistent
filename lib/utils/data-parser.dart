@@ -13,7 +13,7 @@ Future getTimetable(DateTime startDate, DateTime endDate) async {
 
   var timetableData = json.decode(await getData('https://www.easistent.com/m/timetable/weekly?from=${toDashDate(startDate)}&to=${toDashDate(endDate)}', token));
   
-  var timetable = timetableData['time_table'];
+  List timetable = timetableData['time_table'];
   List schoolHourEvents = timetableData['school_hour_events'];
 
   schoolHourEvents.sort((a, b) {
@@ -21,6 +21,11 @@ Future getTimetable(DateTime startDate, DateTime endDate) async {
     DateTime dateB = DateTime.parse(b['time']['date']);
     return dateA.compareTo(dateB);
   });
+
+  for (var lesson in schoolHourEvents) {
+    lesson['time']['from'] = timetable.firstWhere((e) => lesson['time']['from_id'] == e['id'])['time']['from'];
+    lesson['time']['to'] = timetable.firstWhere((e) => lesson['time']['to_id'] == e['id'])['time']['to'];
+  }
 
   for (var i = 0; i < endDate.difference(startDate).inDays + 1; i++) {
     List day = schoolHourEvents.where((lesson) {
@@ -30,6 +35,18 @@ Future getTimetable(DateTime startDate, DateTime endDate) async {
   }
 
   return days;
+}
+
+Future getHours() async {
+
+}
+
+Future getEvaluations() async {
+  Tuple3 token = await getPrefToken();
+  var futureEvaluations = json.decode(await getData('https://www.easistent.com/m/evaluations?filter=future', token))['items'];
+  var pastEvaluations = json.decode(await getData('https://www.easistent.com/m/evaluations?filter=past', token))['items'];
+
+  
 }
 
 Future getHomework() async {

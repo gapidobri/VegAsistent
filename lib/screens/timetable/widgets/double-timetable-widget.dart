@@ -11,7 +11,7 @@ class DoubleTimetableWidget extends StatelessWidget {
   final String room;
   final String teacher;
   
-  TextStyle smallText = TextStyle(color: Colors.white, fontSize: 13);
+  final TextStyle smallText = TextStyle(color: Colors.white, fontSize: 13);
 
   @override
   Widget build(BuildContext context) {

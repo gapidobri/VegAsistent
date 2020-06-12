@@ -3,7 +3,7 @@ import 'package:vegasistent/screens/pai/models/pai-item.dart';
 
 class PAIContentWidget extends StatelessWidget {
   PAIContentWidget({ this.pai });
-  PAIItem pai;
+  final PAIItem pai;
 
   @override
   Widget build(BuildContext context) {

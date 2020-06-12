@@ -1,11 +1,10 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:vegasistent/screens/pai/models/pai-item.dart';
 import 'package:vegasistent/utils/functions.dart';
 
 class PAIWidget extends StatelessWidget {
   PAIWidget({ this.pai });
-  PAIItem pai;
+  final PAIItem pai;
 
   @override
   Widget build(BuildContext context) {

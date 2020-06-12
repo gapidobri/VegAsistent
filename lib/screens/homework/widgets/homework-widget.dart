@@ -5,7 +5,7 @@ import 'package:vegasistent/utils/functions.dart';
 class HomeworkWidget extends StatelessWidget {
 
   HomeworkWidget({ this.homework });
-  HomeworkItem homework;
+  final HomeworkItem homework;
 
   @override
   Widget build(BuildContext context) {

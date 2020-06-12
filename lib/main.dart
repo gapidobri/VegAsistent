@@ -17,6 +17,14 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'VegAsistent',
       home: Router(),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.red
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        //primaryColor: Colors.green
+      ),
     );
   }
 }
@@ -28,12 +36,9 @@ class Router extends StatefulWidget {
 
 class _RouterState extends State<Router> {
 
-  Widget view = Container(
-    color: Colors.white,
-    child: Center(
+  Widget view = Center(
       child: Loading()
-    ),
-  );
+    );
 
   Future<bool> isLoggedIn() async {
     try {

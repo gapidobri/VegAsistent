@@ -8,8 +8,8 @@ class TimetableWidget extends StatelessWidget {
   TimetableWidget({ this.subject, this.startTime, this.endTime, this.room, this.teacher });
 
   final String subject;
-  final DateTime startTime;
-  final DateTime endTime;
+  final String startTime;
+  final String endTime;
   final String room;
   final String teacher;
 
@@ -22,9 +22,9 @@ class TimetableWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(toTime(startTime), style: smallText),
+              Text(startTime, style: smallText),
               Text(subject, style: TextStyle(fontSize: 25, color: Colors.white)),
-              Text(toTime(endTime), style: smallText),
+              Text(endTime, style: smallText),
             ],
           ),
           Spacer(),
