@@ -3,4 +3,5 @@
 
 Free eAsistent app.
 
-[## Releases](https://github.com/gapidobri/VegAsistent/releases).
+
+Download apk from **[Releases](https://github.com/gapidobri/VegAsistent/releases)** in **assets** tab.
