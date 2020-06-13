@@ -3,4 +3,4 @@
 
 Free eAsistent app.
 
-[## Releases]https://github.com/gapidobri/VegAsistent/releases).
+[## Releases](https://github.com/gapidobri/VegAsistent/releases).
