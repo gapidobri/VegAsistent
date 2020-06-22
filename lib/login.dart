@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
 import 'package:vegasistent/models/token.dart';
 import 'package:vegasistent/services/ea-query.dart';
 import 'package:vegasistent/utils/prefs.dart';
@@ -29,7 +28,9 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('Prijava'),
+      ),
       body: Builder(
         builder: (context) => 
           SafeArea(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
 import 'package:vegasistent/login.dart';
 import 'package:vegasistent/models/token.dart';
 import 'package:vegasistent/navigation.dart';
