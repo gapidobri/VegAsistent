@@ -2,13 +2,14 @@
 import 'dart:convert';
 
 import 'package:tuple/tuple.dart';
+import 'package:vegasistent/models/token.dart';
 import 'package:vegasistent/services/ea-query.dart';
 import 'package:vegasistent/utils/functions.dart';
 import 'package:vegasistent/utils/prefs.dart';
 
 Future getTimetable(DateTime startDate, DateTime endDate) async {
 
-  Tuple3 token = await getPrefToken();
+  Token token = await getPrefToken();
   List days = [];
 
   var timetableData = json.decode(await getData('https://www.easistent.com/m/timetable/weekly?from=${toDashDate(startDate)}&to=${toDashDate(endDate)}', token));
@@ -42,7 +43,7 @@ Future getHours() async {
 }
 
 Future getEvaluations() async {
-  Tuple3 token = await getPrefToken();
+  Token token = await getPrefToken();
   var futureEvaluations = json.decode(await getData('https://www.easistent.com/m/evaluations?filter=future', token))['items'];
   var pastEvaluations = json.decode(await getData('https://www.easistent.com/m/evaluations?filter=past', token))['items'];
 
@@ -51,7 +52,7 @@ Future getEvaluations() async {
 
 Future getHomework() async {
   
-  Tuple3 token = await getPrefToken();
+  Token token = await getPrefToken();
   List homeworkList = [];
   
   var subjects = json.decode(await getData('https://www.easistent.com/m/homework', token))['items'];
@@ -67,6 +68,6 @@ Future getHomework() async {
 }
 
 Future getPAI() async {
-  Tuple3 token = await getPrefToken();
+  Token token = await getPrefToken();
   return json.decode(await getData('https://www.easistent.com/m/praises_and_improvements', token))['items'];
 }

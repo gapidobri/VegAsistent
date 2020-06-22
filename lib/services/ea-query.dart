@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
-import 'package:tuple/tuple.dart';
+import 'package:vegasistent/models/token.dart';
 
-Future getToken(username, password) async {
+Future<Token> getToken(String username, String password) async {
 
   var loginRes = await http.post('https://www.easistent.com/p/ajax_prijava', body: {'uporabnik': username, 'geslo': password});
   var cookie = loginRes.headers['set-cookie'].split(';')[0];
@@ -16,7 +16,7 @@ Future getToken(username, password) async {
 
     String childId = document.head.querySelector('meta[name="x-child-id"]').attributes['content'];
     String bearer = document.head.querySelector('meta[name="access-token"]').attributes['content'];
-    return new Tuple3(childId, bearer, cookie);
+    return new Token(childId, bearer, cookie);
 
   } catch (e) {
     print('Something went wrong with getToken() 😥:');
@@ -26,19 +26,19 @@ Future getToken(username, password) async {
   
 }
 
-Future<String> getData(url, token) async {
+Future<String> getData(String url, Token token) async {
 
   var data = await http.get(url, headers: {
     'accept': 'application/json, text/html',
     'accept-encoding': 'gzip, deflate, br',
     'accept-language': 'sl-SI,sl;q=0.9,en-GB;q=0.8,en;q=0.7,de;q=0.6',
     'user-agent': 'Mozilla/5.0',
-    'authorization': token.item2,
+    'authorization': token.bearerToken,
     'x-client-platform': 'web',
     'x-client-version': '13',
-    'x-child-id': token.item1,
+    'x-child-id': token.childId,
     'x-requested-with': 'XMLHttpRequest',
-    'cookie': token.item3
+    'cookie': token.cookie
   });
 
   try {
@@ -51,7 +51,7 @@ Future<String> getData(url, token) async {
   }
 }
 
-Future<bool> isValidToken(token) async {
+Future<bool> isValidToken(Token token) async {
 
   try {
     var testData = await getData('https://www.easistent.com/m/me/child', token);

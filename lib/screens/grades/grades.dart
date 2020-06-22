@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
+import 'package:vegasistent/models/token.dart';
 import 'package:vegasistent/screens/grades/widgets/grade-widget.dart';
 import 'package:vegasistent/services/ea-query.dart';
 import 'package:vegasistent/utils/prefs.dart';
@@ -20,7 +21,7 @@ class _GradesState extends State<Grades> {
   @override
   void initState() {
     void getGrades() async {
-      Tuple3 token = await getPrefToken();
+      Token token = await getPrefToken();
       var subjects = await getData('https://www.easistent.com/m/grades', token);
       var dec = json.decode(subjects);
 

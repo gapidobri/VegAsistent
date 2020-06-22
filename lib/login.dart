@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
+import 'package:vegasistent/models/token.dart';
 import 'package:vegasistent/services/ea-query.dart';
 import 'package:vegasistent/utils/prefs.dart';
 
@@ -62,7 +63,7 @@ class _LoginState extends State<Login> {
                       child: Text('Prijava'),
                       onPressed: () async {
                         if (formKey.currentState.validate()) {
-                          Tuple3 token = await getToken(emailController.text, passwordController.text);
+                          Token token = await getToken(emailController.text, passwordController.text);
                           if (!await savePrefToken(token)) {
                             Scaffold.of(context).showSnackBar(SnackBar(content: Text('Napačni podatki za prijavo')));
                             return;

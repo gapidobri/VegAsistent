@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 import 'package:vegasistent/login.dart';
+import 'package:vegasistent/models/token.dart';
 import 'package:vegasistent/navigation.dart';
 import 'package:vegasistent/services/ea-query.dart';
 import 'package:vegasistent/utils/prefs.dart';
@@ -42,8 +43,7 @@ class _RouterState extends State<Router> {
 
   Future<bool> isLoggedIn() async {
     try {
-      Tuple3 token = await getPrefToken();
-      return await isValidToken(token);
+      return await isValidToken(await getPrefToken());
     } catch (e) {
       print('Something went wrong with isLoggedIn() 😥:');
       print(e);
@@ -59,7 +59,7 @@ class _RouterState extends State<Router> {
   
   void _checkLogin() async {
     try {
-      Tuple3 token = await getPrefToken();
+      Token token = await getPrefToken();
       if (await isValidToken(token)) {
         setState(() {
           view = Navigation(

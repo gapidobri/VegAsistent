@@ -1,13 +1,14 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tuple/tuple.dart';
+import 'package:vegasistent/models/token.dart';
 
-Future<bool> savePrefToken(Tuple3 token) async {
+Future<bool> savePrefToken(Token token) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   try {
-    prefs.setString('child-id', await token.item1);
-    prefs.setString('bearer', await token.item2);
-    prefs.setString('cookie', await token.item3);
+    prefs.setString('child-id', token.childId);
+    prefs.setString('bearer', token.bearerToken);
+    prefs.setString('cookie', token.cookie);
     return true;
   } catch (e) {
     print('Something went wrong with saveToken() 😥:');
@@ -16,14 +17,15 @@ Future<bool> savePrefToken(Tuple3 token) async {
   return false;
 }
 
-Future<Tuple3> getPrefToken() async {
+Future<Token> getPrefToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   List<String> token = [];
   try {
-    token.add(prefs.getString('child-id'));
-    token.add(prefs.getString('bearer'));
-    token.add(prefs.getString('cookie'));
-    return new Tuple3.fromList(token);
+    return Token(
+      prefs.getString('child-id'),
+      prefs.getString('bearer'),
+      prefs.getString('cookie')
+    );
   } catch (e) {
     print('Something went wrong with getToken() 😥:');
     print(e);
