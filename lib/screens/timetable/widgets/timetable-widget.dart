@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vegasistent/utils/functions.dart';
 
 TextStyle smallText = TextStyle(color: Colors.white, fontSize: 13);
 

@@ -1,13 +1,17 @@
 
 import 'dart:convert';
 
-import 'package:tuple/tuple.dart';
+import 'package:html/parser.dart';
 import 'package:vegasistent/models/token.dart';
 import 'package:vegasistent/services/ea-query.dart';
 import 'package:vegasistent/utils/functions.dart';
 import 'package:vegasistent/utils/prefs.dart';
 
-Future getTimetable(DateTime startDate, DateTime endDate) async {
+Future getChild() async {
+  return json.decode(await getData('https://www.easistent.com/m/me/child', await getPrefToken()));
+}
+
+Future<List> getTimetable(DateTime startDate, DateTime endDate) async {
 
   Token token = await getPrefToken();
   List days = [];
@@ -42,15 +46,15 @@ Future getHours() async {
 
 }
 
-Future getEvaluations() async {
-  Token token = await getPrefToken();
-  var futureEvaluations = json.decode(await getData('https://www.easistent.com/m/evaluations?filter=future', token))['items'];
-  var pastEvaluations = json.decode(await getData('https://www.easistent.com/m/evaluations?filter=past', token))['items'];
-
-  
+Future<JsonCodec> getFutureEvaluations() async {
+  return json.decode(await getData('https://www.easistent.com/m/evaluations?filter=future', await getPrefToken()))['items'];
 }
 
-Future getHomework() async {
+Future<JsonCodec> getPastEvaluations() async {
+  return json.decode(await getData('https://www.easistent.com/m/evaluations?filter=past', await getPrefToken()))['items'];
+}
+
+Future<List> getHomework() async {
   
   Token token = await getPrefToken();
   List homeworkList = [];
@@ -67,7 +71,12 @@ Future getHomework() async {
   return homeworkList;
 }
 
-Future getPAI() async {
-  Token token = await getPrefToken();
-  return json.decode(await getData('https://www.easistent.com/m/praises_and_improvements', token))['items'];
+Future<Iterable> getPAI() async {
+  return json.decode(await getData('https://www.easistent.com/m/praises_and_improvements', await getPrefToken()))['items'];
+}
+
+Future<String> getProfilePictureURL() async {
+  var document = parse(await getData('https://www.easistent.com/webapp#/calendar', await getPrefToken()));
+  String url = document.getElementsByClassName('circle-small').first.attributes['src'];
+  return 'https://www.easistent.com' + url;
 }

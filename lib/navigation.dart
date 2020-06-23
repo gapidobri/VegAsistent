@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:vegasistent/screens/calendar/calendar.dart';
 import 'package:vegasistent/screens/grades/grades.dart';
 import 'package:vegasistent/screens/homework/homework.dart';
 import 'package:vegasistent/screens/pai/pai.dart';
 import 'package:vegasistent/screens/timetable/timetable.dart';
+import 'package:vegasistent/utils/data-parser.dart';
 import 'package:vegasistent/widgets/not-available.dart';
 
 class Navigation extends StatefulWidget {
@@ -27,6 +30,38 @@ class _NavigationState extends State<Navigation> {
     Page(name: 'x360', icon: Icons.thumbs_up_down, page: PAI()),
   ];
 
+Widget avatar = CircleAvatar(
+  backgroundColor: Colors.white,
+  radius: 30,
+  child: Icon(
+    Icons.person,
+    size: 40.0,
+    color: Colors.black,
+  ),
+);
+
+String childName = '';
+
+  @override
+  void initState() {
+    getProfilePictureURL().then((url) {
+      setState(() {
+        avatar = CircleAvatar(
+          radius: 30,
+          backgroundImage: NetworkImage(url),
+        );
+      });
+    });
+
+    getChild().then((res) {
+      setState(() {
+        childName = res['display_name'];
+      });
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,17 +79,9 @@ class _NavigationState extends State<Navigation> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 30,
-                    child: Icon(
-                      Icons.person,
-                      size: 40.0,
-                      color: Colors.black,
-                    ),
-                  ),
+                  avatar,
                   Text(
-                    'Beta Uporabnik',
+                    childName,
                     style: TextStyle(fontSize: 24, color: Colors.white),
                   ),
                 ],

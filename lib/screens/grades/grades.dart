@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:tuple/tuple.dart';
 import 'package:vegasistent/models/token.dart';
 import 'package:vegasistent/screens/grades/widgets/grade-widget.dart';
 import 'package:vegasistent/services/ea-query.dart';

@@ -1,6 +1,5 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tuple/tuple.dart';
 import 'package:vegasistent/models/token.dart';
 
 Future<bool> savePrefToken(Token token) async {
@@ -19,7 +18,6 @@ Future<bool> savePrefToken(Token token) async {
 
 Future<Token> getPrefToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  List<String> token = [];
   try {
     return Token(
       prefs.getString('child-id'),

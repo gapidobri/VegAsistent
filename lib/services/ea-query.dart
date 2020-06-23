@@ -42,7 +42,7 @@ Future<String> getData(String url, Token token) async {
   });
 
   try {
-    json.decode(data.body)['id'];
+    //json.decode(data.body)['id'];
     return data.body;
   } catch (e) {
     print('Something went wrong with getData() 😥:');
