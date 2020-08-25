@@ -23,7 +23,6 @@ EventProvider eventStream = EventProvider.stream(
       for (var lesson in day) {
         String start = lesson['time']['date'] + ' ' + lesson['time']['from'];
         String end = lesson['time']['date'] + ' ' + lesson['time']['to'];
-        print(start);
 
         lessons.add(
           BasicEvent(

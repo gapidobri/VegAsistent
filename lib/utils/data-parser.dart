@@ -80,3 +80,8 @@ Future<String> getProfilePictureURL() async {
   String url = document.getElementsByClassName('circle-small').first.attributes['src'];
   return 'https://www.easistent.com' + url;
 }
+
+Future getMessages() async {
+  var document = parse(await getData('https://www.easistent.com/sporocila', await getPrefToken()));
+  print(document.getElementsByClassName('obvestila-seznam-aktivno-prebrano'));
+}
