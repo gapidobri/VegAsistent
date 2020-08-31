@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 TextStyle smallText = TextStyle(color: Colors.white, fontSize: 13);
 
 class TimetableWidget extends StatelessWidget {
-
-  TimetableWidget({ this.subject, this.startTime, this.endTime, this.room, this.teacher });
+  TimetableWidget(
+      {this.subject, this.startTime, this.endTime, this.room, this.teacher});
 
   final String subject;
   final String startTime;
@@ -22,7 +22,8 @@ class TimetableWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(startTime, style: smallText),
-              Text(subject, style: TextStyle(fontSize: 25, color: Colors.white)),
+              Text(subject,
+                  style: TextStyle(fontSize: 25, color: Colors.white)),
               Text(endTime, style: smallText),
             ],
           ),
@@ -31,7 +32,7 @@ class TimetableWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(room, style: smallText),
-              Icon(Icons.edit, color: Colors.white),
+              Icon(Icons.work, color: Colors.white),
               Text(teacher, style: smallText),
             ],
           ),

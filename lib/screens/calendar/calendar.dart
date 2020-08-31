@@ -16,10 +16,10 @@ List evaluations = [];
 
 EventProvider eventStream = EventProvider.stream(
   eventGetter: (dates) async* {
-
     List<BasicEvent> lessons = [];
 
-    for (List day in await getTimetable(dates.start.toDateTimeUnspecified(), dates.end.toDateTimeUnspecified())) {
+    for (List day in await getTimetable(dates.start.toDateTimeUnspecified(),
+        dates.end.toDateTimeUnspecified())) {
       for (var lesson in day) {
         String start = lesson['time']['date'] + ' ' + lesson['time']['from'];
         String end = lesson['time']['date'] + ' ' + lesson['time']['to'];
@@ -28,16 +28,18 @@ EventProvider eventStream = EventProvider.stream(
           BasicEvent(
             id: Random(),
             title: lesson['subject']['name'],
-            color: Color(int.parse(lesson['color'].toString().replaceAll('#', '0xff'))),
-            start: LocalDateTime.dateTime(DateTime.parse(start)),
-            end: LocalDateTime.dateTime(DateTime.parse(end)),
+            color: Color(
+                int.parse(lesson['color'].toString().replaceAll('#', '0xff'))),
+            start: LocalDateTime.dateTime(DateTime.parse(start))
+                .addHours(2), //TODO: Fix timezone problem
+            end: LocalDateTime.dateTime(DateTime.parse(end))
+                .addHours(2), //TODO: Fix timezone problem
           ),
         );
       }
     }
 
     yield lessons;
-
   },
 );
 
@@ -53,14 +55,13 @@ final controller = TimetableController(
 );
 
 class _CalendarState extends State<Calendar> {
-
-@override
+  @override
   void initState() {
-    
     void getLessons() async {
       var token = await getPrefToken();
       await getData('https://www.easistent.com/m/me/child', token);
     }
+
     getLessons();
 
     super.initState();
@@ -69,18 +70,16 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Timetable(
+        child: Scaffold(
+      body: Timetable(
           controller: controller,
           eventBuilder: (event) => BasicEventWidget(event),
-          allDayEventBuilder: (context, event, info) => 
-            BasicAllDayEventWidget(event, info: info)
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.today),
-          onPressed: () => controller.animateTo(LocalDate.today().addDays(-2)),
-        ),
-      )
-    );
+          allDayEventBuilder: (context, event, info) =>
+              BasicAllDayEventWidget(event, info: info)),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.today),
+        onPressed: () => controller.animateTo(LocalDate.today()),
+      ),
+    ));
   }
 }
