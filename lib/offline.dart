@@ -5,11 +5,19 @@ class Offline extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(
-          "Ni povezave",
-          style: TextStyle(
-            fontSize: 30,
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "Ni povezave",
+              style: TextStyle(fontSize: 50),
+            ),
+            Text(
+              "Uporaba aplikacije brez povezave bo kmalu na voljo",
+              style: TextStyle(fontSize: 15),
+            ),
+          ],
         ),
       ),
     );

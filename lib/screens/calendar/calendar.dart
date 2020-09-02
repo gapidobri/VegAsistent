@@ -6,13 +6,12 @@ import 'package:timetable/timetable.dart';
 import 'package:vegasistent/services/ea-query.dart';
 import 'package:vegasistent/utils/data-parser.dart';
 import 'package:vegasistent/utils/prefs.dart';
+import 'package:vegasistent/widgets/class-modal.dart';
 
 class Calendar extends StatefulWidget {
   @override
   _CalendarState createState() => _CalendarState();
 }
-
-List evaluations = [];
 
 EventProvider eventStream = EventProvider.stream(
   eventGetter: (dates) async* {
@@ -26,7 +25,7 @@ EventProvider eventStream = EventProvider.stream(
 
         lessons.add(
           BasicEvent(
-            id: Random(),
+            id: lesson['event_id'],
             title: lesson['subject']['name'],
             color: Color(
                 int.parse(lesson['color'].toString().replaceAll('#', '0xff'))),
@@ -73,7 +72,17 @@ class _CalendarState extends State<Calendar> {
         child: Scaffold(
       body: Timetable(
           controller: controller,
-          eventBuilder: (event) => BasicEventWidget(event),
+          eventBuilder: (event) => BasicEventWidget(
+                event,
+                onTap: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ClassModal(
+                            event.id, event.start.toDateTimeLocal().toString());
+                      });
+                },
+              ),
           allDayEventBuilder: (context, event, info) =>
               BasicAllDayEventWidget(event, info: info)),
       floatingActionButton: FloatingActionButton(

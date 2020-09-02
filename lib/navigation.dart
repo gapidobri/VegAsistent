@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:vegasistent/screens/calendar/calendar.dart';
 import 'package:vegasistent/screens/grades/grades.dart';
@@ -29,32 +28,27 @@ class _NavigationState extends State<Navigation> {
     Page(name: 'x360', icon: Icons.thumbs_up_down, page: PAI()),
   ];
 
-Widget avatar = CircleAvatar(
-  backgroundColor: Colors.white,
-  radius: 30,
-  child: Icon(
-    Icons.person,
-    size: 40.0,
-    color: Colors.black,
-  ),
-);
+  Widget avatar = CircleAvatar(
+    backgroundColor: Colors.white,
+    radius: 30,
+    child: Icon(
+      Icons.person,
+      size: 40.0,
+      color: Colors.black,
+    ),
+  );
 
-String childName = '';
+  String childName = '';
 
   @override
   void initState() {
-    getProfilePictureURL().then((url) {
+    getFullDetails().then((res) {
       setState(() {
+        childName = '${res['name']} ${res['surname']}';
         avatar = CircleAvatar(
           radius: 30,
-          backgroundImage: NetworkImage(url),
+          backgroundImage: NetworkImage(res['picture']),
         );
-      });
-    });
-
-    getChild().then((res) {
-      setState(() {
-        childName = res['display_name'];
       });
     });
 
