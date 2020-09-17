@@ -42,6 +42,8 @@ Future getFullDetails() async {
 }
 
 Future<List> getTimetable(DateTime startDate, DateTime endDate) async {
+  if (!await online()) return getPrefTimetable(startDate, endDate);
+
   Token token = await getPrefToken();
   List days = [];
 
@@ -59,10 +61,9 @@ Future<List> getTimetable(DateTime startDate, DateTime endDate) async {
   });
 
   for (var lesson in schoolHourEvents) {
-    lesson['time']['from'] = timetable.firstWhere(
-        (e) => lesson['time']['from_id'] == e['id'])['time']['from'];
-    lesson['time']['to'] = timetable
-        .firstWhere((e) => lesson['time']['to_id'] == e['id'])['time']['to'];
+    lesson['time']['from'] =
+        idToTime(lesson['time']['from_id'], timetable)['from'];
+    lesson['time']['to'] = idToTime(lesson['time']['to_id'], timetable)['to'];
   }
 
   for (var i = 0; i < endDate.difference(startDate).inDays + 1; i++) {

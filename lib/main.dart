@@ -8,6 +8,7 @@ import 'package:vegasistent/models/token.dart';
 import 'package:vegasistent/navigation.dart';
 import 'package:vegasistent/offline.dart';
 import 'package:vegasistent/services/ea-query.dart';
+import 'package:vegasistent/utils/functions.dart';
 import 'package:vegasistent/utils/prefs.dart';
 import 'package:vegasistent/widgets/loading.dart';
 
@@ -68,8 +69,7 @@ class _RouterState extends State<Router> {
 
   void _checkLogin() async {
     try {
-      final result = await InternetAddress.lookup('www.easistent.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      if (await online()) {
         try {
           Token token = await getPrefToken();
           if (await isValidToken(token)) {

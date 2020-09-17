@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:time_machine/time_machine.dart';
 import 'package:timetable/timetable.dart';
@@ -16,6 +14,10 @@ class Calendar extends StatefulWidget {
 EventProvider eventStream = EventProvider.stream(
   eventGetter: (dates) async* {
     List<BasicEvent> lessons = [];
+
+    /*if (await online())
+      savePrefTimetable(
+          DateTime.now(), DateTime.now().add(new Duration(days: 5)));*/
 
     for (List day in await getTimetable(dates.start.toDateTimeUnspecified(),
         dates.end.toDateTimeUnspecified())) {
