@@ -54,17 +54,19 @@ Future<List> getTimetable(DateTime startDate, DateTime endDate) async {
   List timetable = timetableData['time_table'];
   List schoolHourEvents = timetableData['school_hour_events'];
 
-  schoolHourEvents.sort((a, b) {
-    DateTime dateA = DateTime.parse(a['time']['date']);
-    DateTime dateB = DateTime.parse(b['time']['date']);
-    return dateA.compareTo(dateB);
-  });
-
   for (var lesson in schoolHourEvents) {
     lesson['time']['from'] =
         idToTime(lesson['time']['from_id'], timetable)['from'];
     lesson['time']['to'] = idToTime(lesson['time']['to_id'], timetable)['to'];
   }
+
+  schoolHourEvents.sort((a, b) {
+    DateTime dateA =
+        DateTime.parse('${a['time']['date']} ${a['time']['from']}');
+    DateTime dateB =
+        DateTime.parse('${b['time']['date']} ${b['time']['from']}');
+    return dateA.compareTo(dateB);
+  });
 
   for (var i = 0; i < endDate.difference(startDate).inDays + 1; i++) {
     List day = schoolHourEvents.where((lesson) {

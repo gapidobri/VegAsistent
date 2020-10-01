@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:vegasistent/screens/timetable/widgets/timetable-widget.dart';
 import 'package:vegasistent/utils/data-parser.dart';
@@ -17,13 +20,14 @@ class _TimetableState extends State<Timetable> {
 
   @override
   void initState() {
-    dateTime = DateFormat("EEEE, d. M. y").format(DateTime.now());
+    initializeDateFormatting("sl_SI", null).then((value) {
+      dateTime = DateFormat("EEEE, d. M. y", "sl_SI").format(DateTime.now());
+    });
     getTimetable(DateTime.now(), DateTime.now().add(new Duration(days: 7)))
         .then((table) {
       setState(() {
         loading = null;
         timetableAll = table;
-        print(timetableAll.length);
       });
     });
     super.initState();
@@ -33,64 +37,65 @@ class _TimetableState extends State<Timetable> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(color: Colors.white, boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 3,
-              spreadRadius: 0,
-            )
-          ]),
-          padding: EdgeInsets.all(8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                icon: Icon(Icons.arrow_back_ios),
-                onPressed: () {
-                  controller.animateToPage(
-                    controller.page.round() - 1,
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.ease,
-                  );
+    return loading ??
+        Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                  color: Colors.black,
+                  blurRadius: 3,
+                  spreadRadius: 0,
+                )
+              ]),
+              padding: EdgeInsets.all(8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back_ios),
+                    onPressed: () {
+                      controller.animateToPage(
+                        controller.page.round() - 1,
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.ease,
+                      );
+                    },
+                  ),
+                  Spacer(),
+                  Text(
+                    dateTime,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  Spacer(),
+                  IconButton(
+                    icon: Icon(Icons.arrow_forward_ios),
+                    onPressed: () {
+                      controller.animateToPage(
+                        controller.page.round() + 1,
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.ease,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: PageView.builder(
+                //physics: NeverScrollableScrollPhysics(),
+                itemCount: 7,
+                controller: controller,
+                onPageChanged: (value) {
+                  setState(() {
+                    dateTime = DateFormat("EEEE, d. M. y", "sl_SI").format(
+                        DateTime.now()
+                            .add(new Duration(days: controller.page.round())));
+                  });
                 },
-              ),
-              Spacer(),
-              Text(
-                dateTime,
-                style: TextStyle(fontSize: 16),
-              ),
-              Spacer(),
-              IconButton(
-                icon: Icon(Icons.arrow_forward_ios),
-                onPressed: () {
-                  controller.animateToPage(
-                    controller.page.round() + 1,
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.ease,
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: PageView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: 7,
-            controller: controller,
-            onPageChanged: (value) {
-              setState(() {
-                dateTime = DateFormat("EEEE, d. M. y").format(DateTime.now()
-                    .add(new Duration(days: controller.page.round())));
-              });
-            },
-            itemBuilder: (context, index) {
-              List _timetable = timetableAll[index];
-              return loading ??
-                  Expanded(
+                itemBuilder: (context, index) {
+                  List _timetable = timetableAll[index];
+                  return Expanded(
                     child: ListView.builder(
                       padding: EdgeInsets.all(8),
                       itemCount: _timetable.length,
@@ -122,10 +127,10 @@ class _TimetableState extends State<Timetable> {
                       },
                     ),
                   );
-            },
-          ),
-        ),
-      ],
-    );
+                },
+              ),
+            ),
+          ],
+        );
   }
 }
