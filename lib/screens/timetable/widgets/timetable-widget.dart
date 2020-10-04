@@ -28,7 +28,7 @@ class TimetableWidget extends StatelessWidget {
         break;
 
       case 'exam':
-        icon = Icon(Icons.grade, color: Colors.white);
+        icon = Icon(Icons.border_color, color: Colors.white);
         break;
 
       case 'test':

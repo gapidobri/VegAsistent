@@ -67,6 +67,7 @@ flutter:
   assets:
     - packages/time_machine/data/cultures/cultures.bin
     - packages/time_machine/data/tzdb/tzdb.bin
+    - res/icon.png
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -99,8 +99,8 @@ class _NavigationState extends State<Navigation> {
               endIndent: 32,
             ),
             ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Odjava'),
+              leading: Icon(Icons.exit_to_app, color: Colors.red[600],),
+              title: Text('Odjava', style: TextStyle(color: Colors.red[600]),),
               onTap: () {
                 setState(() {
                   widget.onLogOut();
