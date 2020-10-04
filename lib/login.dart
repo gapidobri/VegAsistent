@@ -29,7 +29,12 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Prijava'),
+        title: Align(
+          alignment: Alignment.center,
+          child: Text(
+            'Prijava',
+          ),
+        ),
       ),
       body: Builder(
         builder: (context) => 
@@ -40,6 +45,13 @@ class _LoginState extends State<Login> {
                 padding: EdgeInsets.all(24.0),
                 child: Column(
                   children: [
+                    Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: Image.asset(
+                        'res/icon.png',
+                        height: MediaQuery.of(context).size.width * 0.4,
+                      ),
+                    ),
                     TextFormField(
                       controller: emailController,
                       decoration: InputDecoration(

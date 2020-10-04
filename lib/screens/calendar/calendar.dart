@@ -71,26 +71,26 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      body: Timetable(
+      child: Scaffold(
+        body: Timetable(
           controller: controller,
           eventBuilder: (event) => BasicEventWidget(
-                event,
-                onTap: () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return ClassModal(
-                            event.id, event.start.toDateTimeLocal().toString());
-                      });
-                },
-              ),
+            event,
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return ClassModal(
+                    event.id, event.start.toDateTimeLocal().toString());
+                });
+            },
+          ),
           allDayEventBuilder: (context, event, info) =>
-              BasicAllDayEventWidget(event, info: info)),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.today),
-        onPressed: () => controller.animateTo(LocalDate.today()),
-      ),
-    ));
+          BasicAllDayEventWidget(event, info: info)),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.today),
+          onPressed: () => controller.animateTo(LocalDate.today()),
+        ),
+      ));
   }
 }

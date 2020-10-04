@@ -14,11 +14,11 @@ class GradeWidget extends StatelessWidget {
   final String teacher;
 
   final List<Color> gradeColors = [
-    Colors.red, // Grade 1
-  	Colors.orange, // Grade 2
-    Colors.yellow, // Grade 3
-    Colors.lightGreen, // Grade 4
-    Colors.green // Grade 5
+    Colors.red[400], // Grade 1
+  	Colors.orange[400], // Grade 2
+    Colors.yellow[400], // Grade 3
+    Colors.lightGreen[400], // Grade 4
+    Colors.green[400] // Grade 5
   ];
 
   @override
@@ -63,7 +63,7 @@ class GradeWidget extends StatelessWidget {
               Text(teacher),
               Text(toEUDate(date)),
               SizedBox(height: 8),
-              CircleAvatar(
+              /*CircleAvatar(
                 backgroundColor: gradeColors[average.round() - 1],
                 child: Text(
                   average.toString(),
@@ -72,7 +72,7 @@ class GradeWidget extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-              ),
+              ),*/
             ],
           )
         ],

@@ -54,6 +54,9 @@ class _GradesState extends State<Grades> {
           var grade = grades[index];
 
           return Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0)
+            ),
             elevation: 8,
             child: GradeWidget(
               subject: grade['subject']['name'],
@@ -61,7 +64,10 @@ class _GradesState extends State<Grades> {
               grade: int.parse(grade['grade']['value']),
               date: DateTime.parse(grade['grade']['date']),
               teacher: grade['grade']['inserted_by']['name'],
-              average: double.parse(grade['subject']['average_grade'].toString().replaceAll(',', '.')),
+              
+              // TODO The average of the grades is useless as you are not grouping the grades by subject.
+
+              // average: double.parse(grade['subject']['average_grade'].toString().replaceAll(',', '.')),
             )
           );
         },

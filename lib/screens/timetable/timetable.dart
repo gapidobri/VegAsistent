@@ -40,7 +40,7 @@ class _TimetableState extends State<Timetable> {
     return loading ??
         Column(
           children: [
-            Container(
+            /*Container(
               decoration: BoxDecoration(color: Colors.white, boxShadow: [
                 BoxShadow(
                   color: Colors.black,
@@ -80,7 +80,7 @@ class _TimetableState extends State<Timetable> {
                   ),
                 ],
               ),
-            ),
+            ),*/
             Expanded(
               child: PageView.builder(
                 //physics: NeverScrollableScrollPhysics(),
@@ -101,6 +101,9 @@ class _TimetableState extends State<Timetable> {
                       itemCount: _timetable.length,
                       itemBuilder: (context, i) {
                         return Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)
+                          ),
                           elevation: 8,
                           color: Color(int.parse(_timetable[i]['color']
                               .toString()
